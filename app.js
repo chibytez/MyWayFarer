@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
 
-import routes from './server/router';
+import routes from './server/routes';
 
 const app = express();
 const port = process.env.PORT || 5000;
