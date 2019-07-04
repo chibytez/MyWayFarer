@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Validator from 'validatorjs';
 
-import { signUpValidation} from '../helper/validation/userValidation';
+import { signUpValidation, loginValidation} from '../helper/validation/userValidation';
 
 import db from '../model/database';
 
@@ -87,6 +87,61 @@ class UserController{
    }
   
 }
+
+/**
+  *
+  * @method login
+  * @description controller for the login api endpoint
+  * @param {object} req - the request body
+  * @param {object} res - the response body
+  * @memberof UserController
+  */
+ static async login (req, res) {
+  try {
+    const { email, password } = req.body; 
+    const validation = new Validator({ password, email }, loginValidation);
+    validation.passes(async() => {
+      const sql = {
+        text: 'SELECT * FROM users WHERE email= $1',
+        values: [email],
+      };
+      const result = await db.query(sql)
+          if (result && result.rows.length === 1) {
+            bcrypt.compare(password, result.rows[0].password, async(error, match) => {
+              if (match) {
+                if (result && result.rows.length === 1) {
+                  delete result.rows[0].password;
+                  
+                  jwt.sign({ user: result.rows[0].id, admin:result.rows[0].admin, cashier:result.rows[0].type}, process.env.SECRET_KEY, (err, token) =>
+                    res.status(201).json({
+                    success: true,
+                    message: 'user successful login',
+                    data: result.rows[0],
+                    token,
+                  }));
+                } 
+                else {
+                  res.status(400).json({
+                    success: false,
+                    message: 'Your email or password is incorrect',
+                  });
+                }
+              }
+            });
+          }
+        
+    });
+    validation.fails(() => {
+      res.status(400).json(validation.errors);
+    });
+  } catch (err) {
+    return res.status(500).json({
+      status: 500,
+      error: err.message,
+    });
+   }
+  }
+ 
 
 }
 
