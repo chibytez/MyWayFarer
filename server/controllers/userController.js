@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Validator from 'validatorjs';
 
-import { signUpValidation, loginValidation} from '../helper/validation/userValidation';
+import { signUp_validation, login_validation} from '../helper/validation/userValidation';
 
 import db from '../model/database';
 
@@ -20,12 +20,12 @@ class UserController{
  static async signUp (req, res) {
    try {
     const {
-      firstName, lastName, email, password,
+      first_name, last_name, email, password,
     } = req.body;
    
     const validation = new Validator({
-      firstName, lastName, password, email,
-    }, signUpValidation);
+      first_name, last_name, password, email,
+    }, signUp_validation);
   
     validation.passes( async() => { 
       if(!password.match(/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)){
@@ -53,20 +53,20 @@ class UserController{
           bcrypt.hash(password, salt, async(err, hash) => { 
             const sql = {
               text:
-                'INSERT INTO users(email, firstName, lastName, password, admin) VALUES($1, $2, $3, $4, $5) RETURNING *',
-              values: [email, firstName,lastName, hash, false],
+                'INSERT INTO users(email, first_name, last_name, password, admin) VALUES($1, $2, $3, $4, $5) RETURNING *',
+              values: [email, first_name,last_name, hash, false],
             };
             const userResult = await db.query(sql);
   
-              jwt.sign({ user: userResult.rows[0].id,admin:userResult.rows[0].admin}, process.env.SECRET_KEY, (err, token) => 
+              jwt.sign({ user_id: userResult.rows[0].id,admin:userResult.rows[0].admin}, process.env.SECRET_KEY, (err, token) => 
                res.status(201).json({
                 success: true,
                 status: '201',
                 message: 'user registration was successful',
                 data: {
-                  id:userResult.rows[0].id,
-                  firstName: userResult.rows[0].firstname,
-                  lastName: userResult.rows[0].lastname,
+                  user_id:userResult.rows[0].id,
+                  first_name: userResult.rows[0].first_name,
+                  last_name: userResult.rows[0].last_name,
                   email,
                   admin:userResult.rows[0].admin,
                 },
@@ -99,7 +99,7 @@ class UserController{
  static async login (req, res) {
   try {
     const { email, password } = req.body; 
-    const validation = new Validator({ password, email }, loginValidation);
+    const validation = new Validator({ password, email }, login_validation);
     validation.passes(async() => {
       const sql = {
         text: 'SELECT * FROM users WHERE email= $1',
@@ -112,7 +112,7 @@ class UserController{
                 if (result && result.rows.length === 1) {
                   delete result.rows[0].password;
                   
-                  jwt.sign({ user: result.rows[0].id, admin:result.rows[0].admin, cashier:result.rows[0].type}, process.env.SECRET_KEY, (err, token) =>
+                  jwt.sign({ user_id: result.rows[0].id, admin:result.rows[0].admin}, process.env.SECRET_KEY, (err, token) =>
                     res.status(201).json({
                     success: true,
                     message: 'user successful login',
