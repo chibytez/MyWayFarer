@@ -14,18 +14,29 @@ class TripsController {
   */
  static async getAllTrips  (req, res)  {
 try {
-    let allTrips;
-    let allTripQuery;
-    let statustype 
+      const   allTripQuery =   'SELECT * FROM trip';
+       const   allTrips = await db.query(allTripQuery, []);   
 
-    if (req.query.status === undefined) {
-        
-    }
+          if (allTrips.rows.length > 0) {
+            return res.status(200).json({
+              status: 'sucess',
+              data: allTrips.rows,
+            });
+          }
+
+          return res.status(404).json({
+            status: 404,
+            error: `no trip found`,
+          });
 
 } catch (err) {
-    
+    return res.status(500).json({
+        status: 500,
+        error: 'Err Detected',
+      });
 }
  }
+
 
 }
 
