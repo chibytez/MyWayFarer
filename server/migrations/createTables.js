@@ -13,5 +13,14 @@ db.query('CREATE TABLE IF NOT EXISTS trip(id SERIAL PRIMARY KEY, bus_id SERIAL, 
     }
 });
 
+db.query('CREATE TABLE IF NOT EXISTS bus(id SERIAL PRIMARY KEY, number_plate VARCHAR(40), manufacturer VARCHAR(40), model VARCHAR(40), capacity NUMERIC(10,2))', (err, res) => {
+  if (err){
+    return err;
+}
+});
 
-db.query('CREATE TABLE IF NOT EXISTS bus(id SERIAL PRIMARY KEY, number_plate VARCHAR(40), manufacturer VARCHAR(40), model VARCHAR(40), capacity NUMERIC(10,2))')
+db.query('CREATE TABLE IF NOT  EXISTS booking(id SERIAL PRIMARY KEY, trip_id INTEGER, user_id INTEGER, seat_number INTEGER , created_on date NOT NULL DEFAULT CURRENT_DATE)', (err, res) => {
+  if (err){
+    return err;
+}
+});

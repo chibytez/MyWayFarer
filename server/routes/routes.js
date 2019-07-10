@@ -1,6 +1,10 @@
 import UserController from "../controllers/userController";
 import AdminController from "../controllers/adminController";
-import TripsController from "../controllers/tripController"
+import TripsController from "../controllers/tripController";
+import BookingsController from "../controllers/bookingController";
+
+import verifyToken from '../middleware/userAuth';
+import userAuth from '../middleware/verifyToken';
 
 const route = (app) => {
     //sign up and login routes
@@ -10,6 +14,9 @@ const route = (app) => {
     // trip routes
     app.post('/api/v1/trips', AdminController.createTrip)
     app.get('/api/v1/trips', TripsController.getAllTrips)
+
+    // booking routes
+     app.post('/api/v1/bookings',verifyToken, userAuth, BookingsController.userBookTrip)
 };
 
 export default route;

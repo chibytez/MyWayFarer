@@ -13,7 +13,6 @@ export default (req, res, next) => {
         });
     }
     req.userInfo = decoded;
-  
   });
   next();
 };

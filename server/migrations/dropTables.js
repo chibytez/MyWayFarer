@@ -17,3 +17,10 @@ db.query('DROP TABLE trip', (err, res) => {
     return err;
   }
 });
+
+db.query('DROP TABLE booking', (err, res) => {
+  if (err) {
+    return err;
+  }
+});
+
