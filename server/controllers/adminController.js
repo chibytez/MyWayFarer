@@ -52,6 +52,41 @@ class AdminController {
      }
  }
 
+   /**
+ *
+ *@method adminGetAllBooking
+ * @description  get  all booking
+ * @param {object} req -the request body
+ * @param {object} res - the object body
+ * @memberof AdminController
+ */
+
+ static async adminGetAllBooking (req,res) {
+try {
+      const   allBookingQuery =   `SELECT booking.id, booking.user_id, booking.trip_id, trip.bus_id,trip.trip_date, booking.seat_number, 
+                    users.first_name, users.last_name, users.email FROM booking  INNER JOIN users  ON booking.user_id
+                     = users.id INNER JOIN trip ON booking.trip_id = trip.id`
+       const   allBooking = await db.query(allBookingQuery, []);   
+
+          if (allBooking.rows.length > 0) {
+            return res.status(200).json({
+              status: 'sucess',
+              data: allBooking.rows,
+            });
+          }
+
+          return res.status(404).json({
+            status: 404,
+            error: `no Booking found`,
+          });
+
+} catch (err) {
+    return res.status(500).json({
+        status: 500,
+        error: 'Err Detected',
+      });
+}
+ }
 
 }
 
