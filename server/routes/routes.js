@@ -18,6 +18,7 @@ const route = (app) => {
     // booking routes
      app.post('/api/v1/bookings',verifyToken, userAuth, BookingsController.userBookTrip)
      app.get('/api/v1/bookings', AdminController.adminGetAllBooking)
+     app.get('/api/v1/booking',verifyToken, userAuth,BookingsController.userGetAllBooking)
 };
 
 export default route;
