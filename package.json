@@ -8,9 +8,11 @@
     "start": "babel-node app.js --exec  babel-node",
     "createTable": " node -r @babel/register server/migrations/createTables.js",
     "dropTable": " node -r @babel/register server/migrations/dropTables.js",
+    "busTable": "node -r @babel/register server/migrations/bus.js",
+    "busSeed": "npm run busTable",
     "userTable": "node -r @babel/register server/migrations/user.js",
     "userSeed": "npm run userTable",
-    "migration": "npm run dropTable && npm run createTable && npm run userSeed"
+    "migration": "npm run dropTable && npm run createTable && npm run userSeed && npm run busSeed"
   },
   "repository": {
     "type": "git",
