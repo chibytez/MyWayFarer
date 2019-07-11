@@ -111,6 +111,35 @@ static async userGetAllBooking(req, res) {
     }
 }
 
+
+ /**
+ *
+ *@method userDeleteBooking
+ * @description  user can delete  his/her booking
+ * @param {object} req -the request body
+ * @param {object} res - the object body
+ * @memberof BookingsController
+ */    
+static async userDeleteBooking(req, res) {
+   const deleteQuery = 'DELETE FROM booking WHERE id =$1  returning *';
+try {
+   const { rows } = await db.query(deleteQuery, [req.params.id]);
+    if(!rows[0]) {
+      return res.status(404).send({'message': 'booking not found'});
+    }
+    return res.status(200).json({
+      status: 200,
+      message: 'booking successfully deleted',
+    });
+} catch (err) {
+   return res.status(500).json({
+              status: 500,
+              err: 'Error Detected',
+            });
+}
+}
+
+
 }
 
 export default BookingsController;
