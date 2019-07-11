@@ -19,6 +19,7 @@ const route = (app) => {
      app.post('/api/v1/bookings',verifyToken, userAuth, BookingsController.userBookTrip)
      app.get('/api/v1/bookings', AdminController.adminGetAllBooking)
      app.get('/api/v1/booking',verifyToken, userAuth,BookingsController.userGetAllBooking)
+     app.delete('/api/v1/bookings/:id',BookingsController.userDeleteBooking)
 };
 
 export default route;
