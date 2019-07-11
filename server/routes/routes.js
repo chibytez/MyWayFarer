@@ -14,6 +14,7 @@ const route = (app) => {
     // trip routes
     app.post('/api/v1/trips', AdminController.createTrip)
     app.get('/api/v1/trips', TripsController.getAllTrips)
+    app.patch('/api/v1/trips/:id', AdminController.adminCancelTrip)
 
     // booking routes
      app.post('/api/v1/bookings',verifyToken, userAuth, BookingsController.userBookTrip)
