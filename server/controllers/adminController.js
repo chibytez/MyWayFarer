@@ -60,7 +60,6 @@ class AdminController {
  * @param {object} res - the object body
  * @memberof AdminController
  */
-
  static async adminGetAllBooking (req,res) {
 try {
       const   allBookingQuery =   `SELECT booking.id, booking.user_id, booking.trip_id, trip.bus_id,trip.trip_date, booking.seat_number, 
@@ -85,6 +84,47 @@ try {
         status: 500,
         error: 'Err Detected',
       });
+}
+ }
+
+   /**
+ *
+ *@method adminCancelTrip
+ * @description  admin cancel trip
+ * @param {object} req -the request body
+ * @param {object} res - the object body
+ * @memberof AdminController
+ */
+  static async adminCancelTrip (req,res) {
+try {
+   const { id } = req.params;
+      const { status } = req.body;
+       if(status ==='active' || status === 'cancelled'){
+            const findTripQuery = 'SELECT * FROM trip WHERE id = $1'; 
+            const foundTrip= await db.query(findTripQuery, [id]);
+            if (foundTrip.rows.length === 0) {
+                return res.status(404).json({
+                  status: 404,
+                  error: 'trip  not found',
+                });
+              }
+               const updateStatusQuery = 'UPDATE trip SET status = $1 WHERE id = $2 returning *';
+              const updatedStatus= await db.query(updateStatusQuery, [status,id]);
+               return res.status(200).json({
+                status: 200,
+                data: {
+              message : 'Trip cancelled successfully' ,
+                },
+              });
+                } return res.status(400).json({
+              stats:400,
+              error:'status can only be active or cancelled',
+            });
+} catch (err) {
+     return res.status(500).json({
+                status: 500,
+                err: 'Error detected',
+              });
 }
  }
 
