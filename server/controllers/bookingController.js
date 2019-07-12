@@ -80,10 +80,23 @@ static async userBookTrip(req, res) {
  * @memberof BookingsController
  */    
 static async userGetAllBooking(req, res) {
- const { user_id } = req.userInfo;
 
     try {
+ const { user_id, admin } = req.userInfo;
 
+if (admin) {
+   const   allBookingQuery =   `SELECT booking.id, booking.user_id, booking.trip_id, trip.bus_id,trip.trip_date, booking.seat_number, 
+                    users.first_name, users.last_name, users.email FROM booking  INNER JOIN users  ON booking.user_id
+                     = users.id INNER JOIN trip ON booking.trip_id = trip.id`
+       const   allBooking = await db.query(allBookingQuery, []);   
+
+          if (allBooking.rows.length > 0) {
+            return res.status(200).json({
+              status: 'sucess',
+              data: allBooking.rows,
+            });
+          }
+}
        const sql = {
                     text: `SELECT booking.id, booking.user_id, booking.trip_id, trip.bus_id,trip.trip_date, booking.seat_number, 
                     users.first_name, users.last_name, users.email FROM booking  INNER JOIN users  ON booking.user_id
