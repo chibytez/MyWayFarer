@@ -20,7 +20,8 @@
     "userSeed": "npm run userTable",
     "userSeed:test": "npm run userTable:test",
     "migration": "npm run dropTable && npm run createTable && npm run userSeed && npm run busSeed",
-    "mig-test": "npm run dropTable:test && npm run createTable:test && npm run userSeed:test && npm run busSeed:test "
+    "mig-test": "npm run dropTable:test && npm run createTable:test && npm run userSeed:test && npm run busSeed:test ",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov  | coveralls "
   },
   "repository": {
     "type": "git",
