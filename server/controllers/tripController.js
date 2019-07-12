@@ -19,7 +19,7 @@ try {
 
           if (allTrips.rows.length > 0) {
             return res.status(200).json({
-              status: 'sucess',
+              status: 'success',
               data: allTrips.rows,
             });
           }
