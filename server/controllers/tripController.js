@@ -14,9 +14,22 @@ class TripsController {
   */
  static async getAllTrips  (req, res)  {
 try {
-      const   allTripQuery =   'SELECT * FROM trip';
-       const   allTrips = await db.query(allTripQuery, []);   
+   let allTripQuery;
+     let allTrips;
 
+  if(req.query.origin !== undefined){
+   const { origin } = req.query;
+   allTripQuery = `SELECT * FROM trip WHERE origin = $1`;
+     allTrips = await db.query(allTripQuery, [origin]);
+     
+  } else if (req.query.destination !== undefined){
+     const { destination } = req.query;
+   allTripQuery = `SELECT * FROM trip WHERE destination = $1`;
+     allTrips = await db.query(allTripQuery, [destination]);
+  }else{
+        allTripQuery =   'SELECT * FROM trip';
+         allTrips = await db.query(allTripQuery, []);   
+}
           if (allTrips.rows.length > 0) {
             return res.status(200).json({
               status: 'success',
