@@ -1,5 +1,5 @@
 export default (req, res, next) => {
-    const header = req.headers.token;
+    const {token} = req.headers;
     if (typeof header !== 'undefined') {
       req.token = header;
       next();
