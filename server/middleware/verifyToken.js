@@ -1,7 +1,7 @@
 export default (req, res, next) => {
-    const {token} = req.headers;
-    if (typeof token !== 'undefined') {
-      req.token = token;
+    const header = req.headers.token;
+    if (typeof header !== 'undefined') {
+      req.token = header;
       next();
     } else {
       res.status(403)
