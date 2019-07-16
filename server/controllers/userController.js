@@ -53,12 +53,12 @@ class UserController{
           bcrypt.hash(password, salt, async(err, hash) => { 
             const sql = {
               text:
-                'INSERT INTO users(email, first_name, last_name, password, admin) VALUES($1, $2, $3, $4, $5) RETURNING *',
+                'INSERT INTO users(email, first_name, last_name, password, is_admin) VALUES($1, $2, $3, $4, $5) RETURNING *',
               values: [email, first_name,last_name, hash, false],
             };
             const userResult = await db.query(sql);
   
-              jwt.sign({ user_id: userResult.rows[0].id,admin:userResult.rows[0].admin}, process.env.SECRET_KEY, (err, token) => 
+              jwt.sign({ user_id: userResult.rows[0].id,is_admin:userResult.rows[0].is_admin}, process.env.SECRET_KEY, (err, token) => 
                res.status(201).json({
                 success: true,
                 status: '201',
@@ -68,7 +68,7 @@ class UserController{
                   first_name: userResult.rows[0].first_name,
                   last_name: userResult.rows[0].last_name,
                   email,
-                  admin:userResult.rows[0].admin,
+                  is_admin:userResult.rows[0].is_admin,
                 },
                 token,
               }))
@@ -112,7 +112,7 @@ class UserController{
                 if (result && result.rows.length === 1) {
                   delete result.rows[0].password;
                   
-                  jwt.sign({ user_id: result.rows[0].id, admin:result.rows[0].admin}, process.env.SECRET_KEY, (err, token) =>
+                  jwt.sign({ user_id: result.rows[0].id, is_admin:result.rows[0].is_admin}, process.env.SECRET_KEY, (err, token) =>
                     res.status(201).json({
                     success: true,
                     message: 'user successful login',

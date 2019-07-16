@@ -10,7 +10,7 @@ let token;
 let id = 1;
 
 async function createAdmin() {
-  const query = `INSERT INTO users(first_name, last_name, email, password, admin)
+  const query = `INSERT INTO users(first_name, last_name, email, password, is_admin)
       VALUES($1, $2, $3, $4, $5) RETURNING email, first_name, last_name, id`;
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash('Chibyke8%', salt);

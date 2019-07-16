@@ -12,7 +12,7 @@ describe('User sign up', () => {
         last_name: 'Aniaku',
         email: 'chibuikeaniaku@gmail.com',
         password: 'Chibyke8%',
-        admin: true,    
+        is_admin: true,    
       };
           chai.request(app)
       .post('/api/v1/auth/signup')

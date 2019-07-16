@@ -1,7 +1,7 @@
 export default (req, res, next) => {
-  const {admin} = req.userInfo;
+  const {is_admin} = req.userInfo;
 
-    if (admin) {
+    if (is_admin) {
       return next();
     }
     res.status(403)
