@@ -1,7 +1,12 @@
 export default (req, res, next) => {
-    const {token} = req.headers;
-    if (typeof token !== 'undefined') {
-      req.token = token;
+  
+  
+    const header = req.headers.token || req.headers['x-access-token'] || req.body.token;
+   
+    
+    if (typeof header !== 'undefined') {
+       req.tokenize = header;
+       
       next();
     } else {
       res.status(403)
