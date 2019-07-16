@@ -3,8 +3,8 @@ import AdminController from "../controllers/adminController";
 import TripsController from "../controllers/tripController";
 import BookingsController from "../controllers/bookingController";
 
-import verifyToken from '../middleware/userAuth';
-import userAuth from '../middleware/verifyToken';
+import userAuth from '../middleware/userAuth';
+import verifyToken from '../middleware/verifyToken';
 import isAdmin from '../middleware/isAdmin';
 
 const route = (app) => {
