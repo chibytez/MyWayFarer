@@ -32,7 +32,7 @@ it('should get login and return admin token', (done) => {
       .post('/api/v1/auth/signin')
       .send(user)
       .end((err, res) => {
-        token = `bearer ${res.body.token}`;
+        token = res.body.token;
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('data');
         expect(res.body).to.have.property('token');
