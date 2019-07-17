@@ -74,10 +74,10 @@ class UserController{
      
     });
     validation.fails(() => {
-      res.status(400).json({
-        validation.errors,
-        error: error.message,
-        });
+      res.status(400).json(
+        validation.error;
+        
+        );
     });
    } catch (error) {
     return res.status(500).json({
