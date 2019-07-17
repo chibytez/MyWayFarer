@@ -31,7 +31,7 @@ class AdminController {
 
                 if (result.rows[0] === 0) {
                     return res.status(404).json({
-                      message: "no user found"
+                      message: error.message
                     })
                   }
     return  res.status(201).json({
@@ -90,7 +90,7 @@ try {
               });
                 } return res.status(400).json({
               stats:400,
-              error:'status can only be active or cancelled',
+              error:error.message,
             });
 } catch (err) {
      return res.status(500).json({

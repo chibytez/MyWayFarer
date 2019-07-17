@@ -39,7 +39,7 @@ try {
 
           return res.status(404).json({
             status: 404,
-            error: `no trip found`,
+            error: error.message,
           });
 
 } catch (error) {
