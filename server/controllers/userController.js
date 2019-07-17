@@ -74,7 +74,10 @@ class UserController{
      
     });
     validation.fails(() => {
-      res.status(400).json(validation.errors);
+      res.status(400).json({
+        validation.errors,
+        error: error.message,
+        });
     });
    } catch (error) {
     return res.status(500).json({
@@ -112,9 +115,11 @@ class UserController{
                   jwt.sign({ user_id: result.rows[0].id, is_admin:result.rows[0].is_admin}, process.env.SECRET_KEY, (err, token) =>
                     res.status(201).json({
                     success: true,
+                     status: '201',
                     message: 'user successful login',
-                    data: result.rows[0],
+                    data:{result.rows[0],
                     token,
+                    } 
                   }));
                 } 
                 else {
@@ -131,10 +136,10 @@ class UserController{
     validation.fails(() => {
       res.status(400).json(validation.errors);
     });
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 500,
-      error: err.message,
+      error: error.message,
     });
    }
   }
