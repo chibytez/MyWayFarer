@@ -45,7 +45,7 @@ try {
 } catch (error) {
     return res.status(500).json({
         status: 500,
-        error: "error detected",
+        error: error.message,
       });
 }
  }
