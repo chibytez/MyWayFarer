@@ -47,14 +47,14 @@ class AdminController {
 }
   })
             });  
-            validation.fails(() => {
-              res.status(400).json(validation.errors, error.message);
-            });
-     } catch (error) {
-        return res.status(500).json({
-            status: 500,
-            error: error.message,
-          });
+          validation.fails(() => {
+      res.status(400).json( validation.errors, error.message);
+    });
+   } catch (error) {
+    return res.status(500).json({
+     status: 500,
+     error: error.message,
+    });
      }
  }
 
