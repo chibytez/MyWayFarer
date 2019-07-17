@@ -36,18 +36,20 @@ class AdminController {
                   }
     return  res.status(201).json({
     success: true,
+      status: '201',
+    data:{
     message: 'trip Successfully created',
     trip: result.rows[0],  
-
+}
   })
             });  
             validation.fails(() => {
               res.status(400).json(validation.errors);
             });
-     } catch (err) {
+     } catch (error) {
         return res.status(500).json({
             status: 500,
-            err: 'Error Detected',
+            error: 'Error Detected',
           });
      }
  }
