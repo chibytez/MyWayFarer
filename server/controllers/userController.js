@@ -23,13 +23,10 @@ class UserController{
       first_name, last_name, email, password,
     } = req.body;
    
-    // const validation = new Validator({
-    //   first_name, last_name, password, email,
-    // }, signUp_validation);
-  
-    // validation.passes( async() => { 
-      
-      
+    const validation = new Validator({
+      first_name, last_name, password, email,
+    }, signUp_validation);
+   validation.passes( async() => { 
       const sql = {
         text: 'SELECT * FROM users WHERE email= $1',
         values: [email],
@@ -65,20 +62,21 @@ class UserController{
                   last_name: userResult.rows[0].last_name,
                   email,
                   is_admin:userResult.rows[0].is_admin,
+                   token,
                 },
-                token,
+               
               }))
           });
         });
      
-    // });
-    // validation.fails(() => {
-    //   res.status(400).json(validation.errors);
-    // });
-   } catch (err) {
+    });
+  validation.fails(() => {
+      res.status(400).json( validation.errors);
+    });
+   } catch (error) {
     return res.status(500).json({
       status: 500,
-      error: err.message,
+      error: error.message,
     });
    }
   
@@ -111,9 +109,11 @@ class UserController{
                   jwt.sign({ user_id: result.rows[0].id, is_admin:result.rows[0].is_admin}, process.env.SECRET_KEY, (err, token) =>
                     res.status(201).json({
                     success: true,
+                     status: '201',
                     message: 'user successful login',
-                    data: result.rows[0],
+                    data:{ user:result.rows[0],
                     token,
+                    } 
                   }));
                 } 
                 else {
@@ -130,10 +130,10 @@ class UserController{
     validation.fails(() => {
       res.status(400).json(validation.errors);
     });
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 500,
-      error: err.message,
+      error: error.message,
     });
    }
   }

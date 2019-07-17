@@ -31,24 +31,30 @@ class AdminController {
 
                 if (result.rows[0] === 0) {
                     return res.status(404).json({
-                      message: "no user found"
+                      message: error.message
                     })
                   }
     return  res.status(201).json({
     success: true,
+      status: '201',
+    data:{
     message: 'trip Successfully created',
-    trip: result.rows[0],  
-
+    trip_id: result.rows[0].id,
+    bus_id : result.rows[0].bus_id,
+    origin: result.rows[0].origin,  
+    destination:result.rows[0].destination,
+    fare:result.rows[0].fare,
+}
   })
             });  
-            validation.fails(() => {
-              res.status(400).json(validation.errors);
-            });
-     } catch (err) {
-        return res.status(500).json({
-            status: 500,
-            err: 'Error Detected',
-          });
+ validation.fails(() => {
+      res.status(400).json( validation.errors, error.message);
+    });
+   } catch (error) {
+    return res.status(500).json({
+     status: 500,
+     error: error.message,
+    });
      }
  }
 
@@ -84,7 +90,7 @@ try {
               });
                 } return res.status(400).json({
               stats:400,
-              error:'status can only be active or cancelled',
+              error:error.message,
             });
 } catch (err) {
      return res.status(500).json({

@@ -21,7 +21,7 @@ describe('User sign up', () => {
           expect(res.status).to.equal(201);
           expect(res.body).to.have.property('status');
           expect(res.body).to.have.property('data');
-          expect(res.body).to.have.property('token');
+         expect(res.body.data).to.have.property('token');
           done();
         });
     });
@@ -69,7 +69,7 @@ describe('User login', () => {
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('data');
-        expect(res.body).to.have.property('token');
+       expect(res.body.data).to.have.property('token');
         done();
       });
 });

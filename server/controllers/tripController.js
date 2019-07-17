@@ -39,13 +39,13 @@ try {
 
           return res.status(404).json({
             status: 404,
-            error: `no trip found`,
+            error: error.message,
           });
 
-} catch (err) {
+} catch (error) {
     return res.status(500).json({
         status: 500,
-        error: 'Err Detected',
+        error: error.message,
       });
 }
  }
