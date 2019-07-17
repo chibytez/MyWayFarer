@@ -26,10 +26,7 @@ class UserController{
     const validation = new Validator({
       first_name, last_name, password, email,
     }, signUp_validation);
-  
-    validation.passes( async() => { 
-      
-      
+   validation.passes( async() => { 
       const sql = {
         text: 'SELECT * FROM users WHERE email= $1',
         values: [email],
