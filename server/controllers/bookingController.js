@@ -20,9 +20,9 @@ static async userBookTrip(req, res) {
      
         const {  trip_id, seat_number } = req.body;
 
-           const validation = new Validator({
-            trip_id, seat_number}, booking_validation);
-            validation.passes( async() => { 
+          //  const validation = new Validator({
+          //   trip_id, seat_number}, booking_validation);
+          //   validation.passes( async() => { 
               const sq = {
         text: 'SELECT * FROM booking WHERE seat_number= $1',
         values: [seat_number],
@@ -59,10 +59,10 @@ static async userBookTrip(req, res) {
       message: 'trip Successfully booked',
       trip: tripSelect.rows[0],  
   })
-            });  
-            validation.fails(() => {
-              res.status(400).json(validation.errors);
-            });
+            // });  
+            // validation.fails(() => {
+            //   res.status(400).json(validation.errors);
+            // });
     } catch (err) {
         return res.status(500).json({
             status: 500,
