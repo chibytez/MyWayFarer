@@ -116,7 +116,7 @@ class UserController{
                     message: 'user successful login',
                     data:{ user:result.rows[0],
                     token,
-                    } ;
+                    } 
                   }));
                 } 
                 else {
