@@ -28,11 +28,7 @@ class UserController{
     }, signUp_validation);
   
     validation.passes( async() => { 
-      if(!password.match(/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)){
-        return res.status(400).json({
-          message: 'password must contain a capital letter,small letter,number and special character',
-        })
-      }
+      
       
       const sql = {
         text: 'SELECT * FROM users WHERE email= $1',
