@@ -65,8 +65,9 @@ class UserController{
                   last_name: userResult.rows[0].last_name,
                   email,
                   is_admin:userResult.rows[0].is_admin,
+                   token,
                 },
-                token,
+               
               }))
           });
         });
@@ -75,10 +76,10 @@ class UserController{
     validation.fails(() => {
       res.status(400).json(validation.errors);
     });
-   } catch (err) {
+   } catch (error) {
     return res.status(500).json({
       status: 500,
-      error: err.message,
+      error: error.message,
     });
    }
   
