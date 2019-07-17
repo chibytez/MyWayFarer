@@ -39,12 +39,16 @@ class AdminController {
       status: '201',
     data:{
     message: 'trip Successfully created',
-    trip: result.rows[0],  
+    trip_id: result.rows[0].id,
+    bus_id : result.rows[0].bus_id,
+    origin: result.rows[0].origin,  
+    destination:result.rows[0].destination,
+    fare:result.rows[0].fare,
 }
   })
             });  
             validation.fails(() => {
-              res.status(400).json(validation.errors);
+              res.status(400).json(validation.errors, error.message);
             });
      } catch (error) {
         return res.status(500).json({
