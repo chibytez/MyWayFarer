@@ -114,9 +114,9 @@ class UserController{
                     success: true,
                      status: '201',
                     message: 'user successful login',
-                    data:{result.rows[0],
+                    data:{ user:result.rows[0],
                     token,
-                    } 
+                    } ;
                   }));
                 } 
                 else {
