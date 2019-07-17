@@ -32,10 +32,10 @@ it('should get login and return admin token', (done) => {
       .post('/api/v1/auth/signin')
       .send(user)
       .end((err, res) => {
-        token = res.body.token;
+         token = res.body.data.token;
         expect(res.status).to.equal(201);
         expect(res.body).to.have.property('data');
-        expect(res.body).to.have.property('token');
+       expect(res.body.data).to.have.property('token');
         done();
       });
   });
@@ -55,8 +55,8 @@ it('should get login and return admin token', (done) => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.have.property('success');
-          expect(res.body).to.have.property('message');
-          expect(res.body).to.have.property('trip');
+          expect(res.body.data).to.have.property('message');
+          expect(res.body).to.have.property('status');
           done();
         });
  });

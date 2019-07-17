@@ -33,10 +33,10 @@ return db.query(query, values);
           .send(user)
           .end((err, res) => {
                  
-            token = res.body.token;
+             token = res.body.data.token;
             expect(res.status).to.equal(201);
             expect(res.body).to.have.property('data');
-            expect(res.body).to.have.property('token')
+           expect(res.body.data).to.have.property('token');
             done();
           });
       });
@@ -55,8 +55,8 @@ it('should create a new account', (done) => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.have.property('success');
-          expect(res.body).to.have.property('message');
-          expect(res.body).to.have.property('trip');
+         expect(res.body.data).to.have.property('message');
+          expect(res.body).to.have.property('status');
           done();
             });
         });
