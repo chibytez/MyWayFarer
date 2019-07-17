@@ -47,7 +47,7 @@ class AdminController {
 }
   })
             });  
-          validation.fails(() => {
+ validation.fails(() => {
       res.status(400).json( validation.errors, error.message);
     });
    } catch (error) {
