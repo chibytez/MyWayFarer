@@ -29,7 +29,7 @@ class UserController{
   
     validation.passes( async() => { 
       if(!password.match(/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)){
-        return res.status(201).json({
+        return res.status(400).json({
           message: 'password must contain a capital letter,small letter,number and special character',
         })
       }
