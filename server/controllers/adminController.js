@@ -20,9 +20,9 @@ class AdminController {
             origin, destination, fare 
            } = req.body;
 
-          //  const validation = new Validator({
-          //   origin, destination, fare }, trip_validation);
-          //   validation.passes( async() => { 
+           const validation = new Validator({
+            origin, destination, fare }, trip_validation);
+            validation.passes( async() => { 
                 const query = { 
                     text : 'INSERT INTO trip( origin, destination, fare, status)VALUES( $1, $2, $3, $4) RETURNING *',
                     values: [origin, destination, fare, 'active'],
@@ -40,10 +40,10 @@ class AdminController {
     trip: result.rows[0],  
 
   })
-            // });  
-            // validation.fails(() => {
-            //   res.status(400).json(validation.errors);
-            // });
+            });  
+            validation.fails(() => {
+              res.status(400).json(validation.errors);
+            });
      } catch (err) {
         return res.status(500).json({
             status: 500,
