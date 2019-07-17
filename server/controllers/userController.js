@@ -23,11 +23,11 @@ class UserController{
       first_name, last_name, email, password,
     } = req.body;
    
-    const validation = new Validator({
-      first_name, last_name, password, email,
-    }, signUp_validation);
+    // const validation = new Validator({
+    //   first_name, last_name, password, email,
+    // }, signUp_validation);
   
-    validation.passes( async() => { 
+    // validation.passes( async() => { 
       
       
       const sql = {
@@ -71,10 +71,10 @@ class UserController{
           });
         });
      
-    });
-    validation.fails(() => {
-      res.status(400).json(validation.errors);
-    });
+    // });
+    // validation.fails(() => {
+    //   res.status(400).json(validation.errors);
+    // });
    } catch (err) {
     return res.status(500).json({
       status: 500,
