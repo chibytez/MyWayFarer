@@ -82,9 +82,9 @@ static async userBookTrip(req, res) {
 static async userGetAllBooking(req, res) {
 
     try {
- const { user_id, admin } = req.userInfo;
+ const { user_id, is_admin } = req.userInfo;
 
-if (admin) {
+if (is_admin) {
    const   allBookingQuery =   `SELECT booking.id, booking.user_id, booking.trip_id, trip.bus_id,trip.trip_date, booking.seat_number, 
                     users.first_name, users.last_name, users.email FROM booking  INNER JOIN users  ON booking.user_id
                      = users.id INNER JOIN trip ON booking.trip_id = trip.id`
