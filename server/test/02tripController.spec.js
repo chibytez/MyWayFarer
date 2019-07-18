@@ -43,7 +43,6 @@ it('should get login and return admin token', (done) => {
   describe('/POST create a trip', () => {
  it('should create a new account', (done) => {
       const trips = {
-        bus_id: 1,
         origin: 'lagos',
         destination: 'enugu',
         fare: 5000,

@@ -16,32 +16,29 @@ class TripsController {
 try {
    let allTripQuery;
      let allTrips;
-
-  if(req.query.origin !== undefined){
+if((req.query.origin == undefined)&&(req.query.destination == undefined)){
+  allTripQuery =   'SELECT * FROM trip';
+  allTrips = await db.query(allTripQuery, []); 
+}
+  else if(req.query.origin !== undefined){
    const { origin } = req.query;
    allTripQuery = `SELECT * FROM trip WHERE origin = $1`;
-     allTrips = await db.query(allTripQuery, [origin]);
-     
-  } else if (req.query.destination !== undefined){
+     allTrips = await db.query(allTripQuery, [origin]);   
+  } else{
      const { destination } = req.query;
-   allTripQuery = `SELECT * FROM trip WHERE destination = $1`;
+    allTripQuery = `SELECT * FROM trip WHERE destination = $1`;
      allTrips = await db.query(allTripQuery, [destination]);
-  }else{
-        allTripQuery =   'SELECT * FROM trip';
-         allTrips = await db.query(allTripQuery, []);   
-}
-          if (allTrips.rows.length > 0) {
+  }
+ if (allTrips.rows.length > 0) {
             return res.status(200).json({
               status: 'success',
               data: allTrips.rows,
             });
           }
-
-          return res.status(404).json({
+           return res.status(404).json({
             status: 404,
             error: error.message,
-          });
-
+            });
 } catch (error) {
     return res.status(500).json({
         status: 500,
