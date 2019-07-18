@@ -26,22 +26,20 @@ try {
      const { destination } = req.query;
    allTripQuery = `SELECT * FROM trip WHERE destination = $1`;
      allTrips = await db.query(allTripQuery, [destination]);
-  }else{
+  }else {
         allTripQuery =   'SELECT * FROM trip';
          allTrips = await db.query(allTripQuery, []);   
 }
-          if (allTrips.rows.length > 0) {
+ if (allTrips.rows.length > 0) {
             return res.status(200).json({
               status: 'success',
               data: allTrips.rows,
             });
           }
-
-          return res.status(404).json({
+   return res.status(404).json({
             status: 404,
             error: error.message,
           });
-
 } catch (error) {
     return res.status(500).json({
         status: 500,
