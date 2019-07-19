@@ -31,7 +31,7 @@ class AdminController {
 
                 if (result.rows[0] === 0) {
                     return res.status(404).json({
-                      message: error.message
+                      message: 'trip not found'
                     })
                   }
     return  res.status(201).json({
@@ -90,8 +90,9 @@ try {
               });
                 } return res.status(400).json({
               stats:400,
-              error:error.message,
+              error:'status can only be active or cancelled',
             });
+            
 } catch (err) {
      return res.status(500).json({
                 status: 500,
