@@ -35,7 +35,7 @@ WayFarer is a public bus transportation booking server.
 
 # API
 
-- Heroku https://mywayfare.herokuapp.com/api/v1
+- Heroku https://mywayfarer.herokuapp.com/api/v1
 
 # Project Management Tool
 - https://www.pivotaltracker.com/n/projects/2358696
