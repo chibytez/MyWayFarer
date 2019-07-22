@@ -37,7 +37,7 @@ if((req.query.origin == undefined)&&(req.query.destination == undefined)){
           }
            return res.status(404).json({
             status: 404,
-            error: error.message,
+            error: 'trip not found',
             });
 } catch (error) {
     return res.status(500).json({

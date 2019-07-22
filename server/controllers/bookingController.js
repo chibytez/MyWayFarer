@@ -17,9 +17,7 @@ static async userBookTrip(req, res) {
     
     try {
         const { user_id } = req.userInfo;   
-     
         const {  trip_id, seat_number } = req.body;
-
            const validation = new Validator({
             trip_id, seat_number}, booking_validation);
             validation.passes( async() => { 
@@ -27,9 +25,7 @@ static async userBookTrip(req, res) {
         text: 'SELECT * FROM booking WHERE seat_number= $1',
         values: [seat_number],
       };
-  
       const results = await db.query(sq, [seat_number]);
-  
         if (results.rows.length > 0) {
           return res.status(409).json({
             errors: {
@@ -89,7 +85,6 @@ if (is_admin) {
                     users.first_name, users.last_name, users.email FROM booking  INNER JOIN users  ON booking.user_id
                      = users.id INNER JOIN trip ON booking.trip_id = trip.id`
        const   allBooking = await db.query(allBookingQuery, []);   
-
           if (allBooking.rows.length > 0) {
             return res.status(200).json({
               status: 'sucess',
@@ -111,7 +106,6 @@ if (is_admin) {
           data: bookings.rows,
         });
       }
-   
       return res.status(404).json({
         status: 404,
         error: 'booking not found',
